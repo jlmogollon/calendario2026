@@ -1,0 +1,16 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Opcional: si algún día añades clave de Firebase en un archivo aparte, no la subas
+# firebase-config.local.js
+# .env
+# .env.local
