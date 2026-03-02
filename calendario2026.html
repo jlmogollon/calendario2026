@@ -1408,7 +1408,11 @@ async function loadFromFirestore() {
           timeEnd: data.timeEnd || ''
         };
       });
-      events = list.sort((a, b) => (a.start || '').localeCompare(b.start || ''));
+      // Mezcla: Firestore sobreescribe/añade por id, pero si hay pocos docs no borra los eventos por defecto del HTML.
+      const byId = new Map();
+      events.forEach(e => byId.set(e.id, e));
+      list.forEach(e => byId.set(e.id, e));
+      events = Array.from(byId.values()).sort((a, b) => (a.start || '').localeCompare(b.start || ''));
     }
     firestoreReady = true;
   } catch (err) {
