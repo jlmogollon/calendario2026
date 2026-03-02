@@ -1409,13 +1409,10 @@ async function loadFromFirestore() {
         };
       });
       events = list.sort((a, b) => (a.start || '').localeCompare(b.start || ''));
-    } else {
-      events = [];
     }
     firestoreReady = true;
   } catch (err) {
     console.warn('Firestore load:', err);
-    events = [];
   }
   render();
   renderCalendar();
