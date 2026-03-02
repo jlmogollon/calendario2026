@@ -8,6 +8,8 @@ Calendario de eventos (nacional, distrital, local) con vista lista y calendario.
 
 (Asegúrate en el repo: **Settings → Pages → Source = GitHub Actions** para que el deploy automático funcione.)
 
+
+
 **Para que nada quede solo en local:** después de añadir o modificar cualquier cosa en el proyecto, ejecuta `.\push.ps1` en PowerShell (desde esta carpeta). Así todo se guarda en la nube (commit + push a `main`) y GitHub Pages se actualiza solo.
 
 ## Enlace público y deploy automático (GitHub Pages)
