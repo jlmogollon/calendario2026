@@ -1,0 +1,21 @@
+{
+  "name": "Calendario IPUE 2026",
+  "short_name": "Cal IPUE 2026",
+  "start_url": "./calendario2026.html",
+  "display": "standalone",
+  "background_color": "#f5f6fa",
+  "theme_color": "#ffffff",
+  "description": "Calendario de eventos IPUE para el año 2026.",
+  "icons": [
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Calendar_icon_2.svg/1024px-Calendar_icon_2.svg.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Calendar_icon_2.svg/1024px-Calendar_icon_2.svg.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
