@@ -294,25 +294,23 @@ let events = [
 let nextId = 500;
 let currentFilter = 'all';
 let firestoreReady = false;
-let isAdmin = false;
+let isAdmin = localStorage.getItem('cal_admin_logged') === 'true';
 
-if (auth) {
-  auth.onAuthStateChanged(user => {
-    isAdmin = !!user;
-    updateAuthUI();
-    render();
-    renderCalendar();
-  });
-}
+document.addEventListener('DOMContentLoaded', () => {
+  updateAuthUI();
+  // Ensure layout is up-to-date with auth state
+});
 
 function updateAuthUI() {
   const authBtn = document.getElementById('authBtn');
   if (authBtn) {
     if (isAdmin) {
-      authBtn.textContent = 'Salir';
+      authBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>';
+      authBtn.setAttribute('aria-label', 'Cerrar sesión');
       authBtn.onclick = logout;
     } else {
-      authBtn.textContent = 'Ingresar';
+      authBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
+      authBtn.setAttribute('aria-label', 'Ingresar como Administrador');
       authBtn.onclick = toggleAuthModal;
     }
   }
@@ -332,26 +330,29 @@ function handleAuthOverlayClick(e) {
   if (e.target === e.currentTarget) closeAuthModal();
 }
 
-async function login() {
-  const email = document.getElementById('authEmail').value;
+function login() {
   const password = document.getElementById('authPassword').value;
-  if (!email || !password) return;
-  try {
-    await auth.signInWithEmailAndPassword(email, password);
+  if (password === '1507') {
+    isAdmin = true;
+    localStorage.setItem('cal_admin_logged', 'true');
     closeAuthModal();
+    document.getElementById('authPassword').value = '';
+    updateAuthUI();
+    render();
+    renderCalendar();
     showToast('Sesión iniciada');
-  } catch (error) {
-    alert('Error al iniciar sesión: ' + error.message);
+  } else {
+    alert('PIN incorrecto.');
   }
 }
 
-async function logout() {
-  try {
-    await auth.signOut();
-    showToast('Sesión cerrada');
-  } catch (error) {
-    alert('Error al cerrar sesión: ' + error.message);
-  }
+function logout() {
+  isAdmin = false;
+  localStorage.removeItem('cal_admin_logged');
+  updateAuthUI();
+  render();
+  renderCalendar();
+  showToast('Sesión cerrada');
 }
 
 async function loadFromFirestore() {
